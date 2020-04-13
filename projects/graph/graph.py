@@ -68,7 +68,26 @@ class Graph:
 		Print each vertex in depth-first order
 		beginning from starting_vertex.
 		"""
-        pass  # TODO
+        # Create a stack
+        stk = Stack()
+        stk.push([starting_vertex])
+        visited = set()
+
+        # Start at the starting vertex
+        while stk.size() > 0:
+            # Explore that vertex
+            path = stk.pop()
+
+            # has node been visited?
+            if path[-1] not in visited:
+                print(path[-1])
+                visited.add(path[-1])
+
+                # Is there a neighbor to this vertex that I can explore?
+                for next_vert in self.get_neighbors(path[-1]):
+                    new_path = list(path)
+                    new_path.append(next_vert)
+                    stk.push(new_path)
 
     def dft_recursive(self, starting_vertex):
         """
