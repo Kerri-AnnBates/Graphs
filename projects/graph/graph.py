@@ -89,14 +89,28 @@ class Graph:
                     new_path.append(next_vert)
                     stk.push(new_path)
 
-    def dft_recursive(self, starting_vertex):
+    def dft_recursive(self, starting_vertex, visited=None):
         """
 		Print each vertex in depth-first order
 		beginning from starting_vertex.
 
 		This should be done using recursion.
 		"""
-        pass  # TODO
+
+        if visited is None:
+            visited = set()
+
+        # Base Case: if vertex has already been visited
+        if starting_vertex in visited:
+            return
+
+        # print the vertex
+        print(starting_vertex)
+        visited.add(starting_vertex)  # add to visited list
+
+        # for each neighbor, run the function on it
+        for vert in self.get_neighbors(starting_vertex):
+            self.dft_recursive(vert, visited)
 
     def bfs(self, starting_vertex, destination_vertex):
         """
@@ -146,9 +160,10 @@ class Graph:
 
             # has node been visited?
             if path[-1] not in visited:
-                # print(path[-1])
+
                 if path[-1] == destination_vertex:
                     return path
+
                 visited.add(path[-1])
 
                 # Is there a neighbor to this vertex that I can explore?
@@ -157,7 +172,7 @@ class Graph:
                     new_path.append(next_vert)
                     stk.push(new_path)
 
-    def dfs_recursive(self, starting_vertex, destination_vertex):
+    def dfs_recursive(self, starting_vertex, destination_vertex, visited=None, path=[]):
         """
 		Return a list containing a path from
 		starting_vertex to destination_vertex in
@@ -165,7 +180,24 @@ class Graph:
 
 		This should be done using recursion.
 		"""
-        pass  # TODO
+
+        if visited is None:
+            visited = set()
+
+        # Add vertex to visited
+        visited.add(starting_vertex)
+        path = path + [starting_vertex]  # make copy of path, add vertex to path
+
+        # if the destination is reached, return the path
+        if starting_vertex == destination_vertex:
+            return path
+
+        # Run dfs search function on neighbors
+        for vert in self.get_neighbors(starting_vertex):
+            if vert not in visited:
+                new_path = self.dfs_recursive(vert, destination_vertex, visited, path)
+                if new_path:
+                    return new_path
 
 
 if __name__ == "__main__":
