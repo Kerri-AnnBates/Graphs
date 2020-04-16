@@ -82,7 +82,7 @@ class SocialGraph:
         The key is the friend's ID and the value is the path.
         """
         visited = {}  # Note that this is a dictionary, not a set
-        # !!!! IMPLEMENT ME
+
         # Starting node is the id
         starting_node = user_id
 
@@ -93,13 +93,11 @@ class SocialGraph:
         while qq.size() > 0:
             # pop node from queue add to path
             path = qq.dequeue()
+            node = path[-1]
 
-            # If not visited
-            if path[-1] not in visited:
+            if node not in visited:
                 # Add to visited the id and the path
-                # print(path)
-                # dict[key] = value
-                visited[path[-1]] = path
+                visited[node] = path
 
                 # Enqueue all neighbors
                 for next_vert in self.friendships[path[-1]]:
